@@ -863,7 +863,7 @@
                                         <form class="d-flex" role="search">
                                             <input class="form-control" type="search" placeholder="Search"
                                                 aria-label="Search">
-                                            <a href="{{ route('product.create')}}" class="btn btn-primary">新增產品按鈕
+                                            <a href="{{ route('product.create') }}" class="btn btn-primary">新增產品按鈕
                                                 {{-- <button href="/Addcartlist" class="btn btn-primary"></button> --}}
                                             </a>
                                         </form>
@@ -908,48 +908,53 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($products as $product)
-                                            
-                                            <tr>
+                                                <tr>
 
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="" id="orderOne">
-                                                        <label class="form-check-label" for="orderOne">
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="" id="orderOne">
+                                                            <label class="form-check-label" for="orderOne">
 
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img
-                                                            src="./assets/images/products/product-img-1.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td>{{$product->name}}</td>
-                                                <td>{{$product->desc}}</td>
-
-                                                <td>01 May 2023 (10:12 am)</td>
-                                         
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>{{$product->price}}</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                       
-                                                        <div><a class="dropdown-item" href="#">
-                                                            <i class="fa-regular fa-trash-can me-3"></i>刪除</a>
+                                                            </label>
                                                         </div>
-                                                        <div><a class="dropdown-item" href="{{ route('product.edit')}}">
-                                                            <i class="fa-light fa-pen-to-square me-3"></i>編輯</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#"> <img src="{{ asset($product->img_path) }}"
+                                                                alt="" class="icon-shape icon-md"></a>
+                                                    </td>
+                                                    <td>{{ $product->name }}</td>
+                                                    <td>{{ $product->desc }}</td>
+                                                    <td>{{ $product->created_at->format('Y/m-d') }}</td>
+
+                                                    <td>01 May 2023 (10:12 am)</td>
+
+
+                                                    <td>
+                                                        @if ($product->status == 1)
+                                                            <span
+                                                                class="badge bg-light-primary text-dark-primary">顯示</span>
+                                                        @else
+                                                            <span class="badge bg-danger ">不顯示</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $product->price }}</td>
+
+                                                    <td>
+                                                        <div class="dropdown">
+
+                                                            <div><a class="dropdown-item" href="#">
+                                                                    <i class="fa-regular fa-trash-can me-3"></i>刪除</a>
+                                                            </div>
+                                                            <div><a class="dropdown-item"
+                                                                    href="{{ route('product.edit', ['id' => $product->id]) }}">
+                                                                    <i
+                                                                        class="fa-light fa-pen-to-square me-3"></i>編輯</a>
+                                                            </div>
+
                                                         </div>
-                                                    
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>

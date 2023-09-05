@@ -856,412 +856,67 @@
                     <div class="col-xl-12 col-12 mb-5">
                         <!-- card -->
                         <div class="card h-100 card-lg">
-                            {{-- <div class=" p-6 "> --}}
-                            {{-- <div class="row justify-content-between"> --}}
-                            {{-- <div class="col-md-4 col-12 mb-2 mb-md-0">
-                                        <!-- form -->
-                                        <form class="d-flex" role="search">
-                                            <input class="form-control" type="search" placeholder="Search"
-                                                aria-label="Search">
-
-                                        </form>
-                                    </div> --}}
-                            {{-- <div class="col-lg-2 col-md-4 col-12">
-                                        <!-- select -->
-                                        <select class="form-select">
-                                            <option selected="">Status</option>
-                                            <option value="Success">Success</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Cancel">Cancel</option>
-                                        </select>
-                                    </div> --}}
-                            {{-- </div> --}}
-                            {{-- </div> --}}
-                            <!-- card body -->
+                            <form action="{{route('product.update',['id' => $product->id ])}}" method="post" enctype="multipart/form-data"></form>
+                            @csrf
                             <div class="card-body p-0">
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <label class="form-check-label fs-1" for="firstCheckbox">產品名稱</label>
-                                        <input class="form-check-input me-1 fs-1 w-75" type="text" value="">
+                                        <input  name="name"
+                                        class="form-check-input me-1 fs-1 w-75" type="text"
+                                            value="{{ $product->name }}" required>
                                     </li>
                                     <li class="list-group-item" style="height: 150px;">
+                                        <img src="{{ asset($product->img_path) }}" alt="">
                                         <label class="form-check-label fs-1" for="secondCheckbox">產品圖片</label>
-                                        <input class="form-check-input me-1 fs-1 w-75" type="file" value=""
+                                        <input class="form-check-input me-1 fs-1 w-75" type="file" name="image" value=""
                                             style="height: 100px;">
                                     </li>
                                     <li class="list-group-item">
                                         <label class="form-check-label fs-1" for="thirdCheckbox">產品價格</label>
-                                        <input class="form-check-input me-1 fs-1 w-75" type="number" value="">
+                                        <input class="form-check-input me-1 fs-1 w-75" name="price"  type="number" value="{{$product->price}}" required>
                                     </li>
                                     <li class="list-group-item">
                                         <label class="form-check-label fs-1" for="fourthCheckbox">顯示狀態</label>
-                                        <input type="radio" id="appear" name="fourthCheckbox" value="yes"
-                                            checked />
-                                        <label for="huey" class="fs-1">要顯示</label>
-                                        <input type="radio" id="no-appear" name="fourthCheckbox" value="no"
-                                            checked />
-                                        <label for="huey" class="fs-1">不顯示</label>
+                                        <label for="huey" class="fs-1">
+                                        <input 
+                                            type="radio" 
+                                            id="appear" 
+                                            name="status" 
+                                            value="1"
+                                            @if ($product->status === 1)
+                                                checked                                                
+                                            @endif
+                                            />
+                                            要顯示
+                                        </label>
+                                        <label for="huey" class="fs-1">
+                                        <input 
+                                            type="radio" 
+                                            id="no-appear" 
+                                            name="status" 
+                                            value="2"
+                                            @if ($product->status === 2)
+                                            checked 
+                                            @endif
+                                             />
+                                            不顯示
+                                        </label>
 
                                     </li>
                                     <li class="list-group-item" style="height: 300px">
                                         <label class="form-check-label fs-1" for="thirdCheckbox">產品描述</label>
-                                        <input class="form-check-input me-1 fs-1 w-75 h-50" type="text"
-                                            value="">
+                                        <hr>
+                                        <textarea name="desc" id="" class="w-100" style="resize: none; min-height:150px;">{{ $product->desc}}</textarea>
                                     </li>
                                 </ul>
                                 <div class="btn-group justify-content-center d-flex">
-                                    <a href="/cartlist" class="btn btn-primary m-3">取消按鈕</a>
-                                    <a href="/cartlist" class="btn btn-primary m-3">儲存按鈕</a>
+                                    <a href="{{ route('product.index')}}" class="btn btn-primary m-3">取消按鈕</a>
+                                    <button type="submit" class="btn btn-primary m-3">儲存按鈕</button>
                                 </div>
-                                <!-- table responsive -->
-                                {{-- <div class="table-responsive">
-                                    <table
-                                        class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
-                                        <thead class="bg-light">
-                                            <tr>
-                                                <th>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="checkAll">
-                                                        <label class="form-check-label" for="checkAll">
-
-                                                        </label>
-                                                    </div>
-                                                </th>
-                                                <th>Image</th>
-                                                <th>Order Name</th>
-                                                <th>Customer</th>
-                                                <th>Date &amp; TIme</th>
-                                                <th>Payment</th>
-                                                <th>Status</th>
-                                                <th>Amount</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderOne">
-                                                        <label class="form-check-label" for="orderOne">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-1.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1007</a></td>
-                                                <td>Jennifer Sullivan</td>
-
-                                                <td>01 May 2023 (10:12 am)</td>
-                                                <td>Paypal</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>$12.99</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderTwo">
-                                                        <label class="form-check-label" for="orderTwo">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-2.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1006</a></td>
-                                                <td>Willie Hanson</td>
-
-                                                <td>20 April 2023 (9:20 am)</td>
-                                                <td>COD</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>$8.19</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderThree">
-                                                        <label class="form-check-label" for="orderThree">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-3.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1005</a></td>
-                                                <td>Dori Stewart </td>
-
-                                                <td>11 March 2023 (7:12 pm)</td>
-                                                <td>Paypal</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-warning text-dark-warning">Pending</span>
-                                                </td>
-                                                <td>$8.19</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderFour">
-                                                        <label class="form-check-label" for="orderFour">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-4.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1004</a></td>
-                                                <td>Ezekiel Rogerson </td>
-
-                                                <td>09 March 2023 (6:23 pm)</td>
-                                                <td>Stripe</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>$23.11</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderFive">
-                                                        <label class="form-check-label" for="orderFive">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-5.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1003</a></td>
-                                                <td>Maria Roux </td>
-
-                                                <td>18 Feb 2022 (12:20 pm)</td>
-                                                <td>COD</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>$2.00</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderSix">
-                                                        <label class="form-check-label" for="orderSix">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-6.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1002</a></td>
-                                                <td>Robert Donald</td>
-
-                                                <td>12 Feb 2022 (4:56 pm)</td>
-                                                <td>Paypal</td>
-
-                                                <td>
-                                                    <span class="badge bg-light-danger text-dark-danger">Cancel</span>
-                                                </td>
-                                                <td>$56.00</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="orderSeven">
-                                                        <label class="form-check-label" for="orderSeven">
-
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a href="#"> <img src="./assets/images/products/product-img-7.jpg"
-                                                            alt="" class="icon-shape icon-md"></a>
-                                                </td>
-                                                <td><a href="#" class="text-reset">FC#1001</a></td>
-                                                <td>Diann Watson</td>
-
-                                                <td>22 Jan 2023 (1:20 pm)</td>
-                                                <td>Paypal</td>
-
-                                                <td>
-                                                    <span
-                                                        class="badge bg-light-primary text-dark-primary">Success</span>
-                                                </td>
-                                                <td>$23.00</td>
-
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="#" class="text-reset" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-regular fa-trash-can me-3"></i>Delete</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item" href="#"><i
-                                                                        class="fa-light fa-pen-to-square me-3"></i>Edit</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div> --}}
+                              
                             </div>
-                            {{-- <div class="border-top d-md-flex justify-content-between align-items-center p-6">
-                                <span>Showing 1 to 8 of 12 entries</span>
-                                <nav class="mt-2 mt-md-0">
-                                    <ul class="pagination mb-0 ">
-                                        <li class="page-item disabled"><a class="page-link " href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                    </ul>
-                                </nav>
-                            </div> --}}
+                          
                         </div>
 
                     </div>

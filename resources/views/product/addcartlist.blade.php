@@ -857,7 +857,7 @@
                         <!-- card -->
                         <div class="card h-100 card-lg">
                             <form action="{{ route('product.store') }}" 
-                            method="POST">
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                                 <div class="card-body p-0">
                                     <ul class="list-group">
@@ -869,7 +869,7 @@
                                         <li class="list-group-item" style="height: 150px;">
                                             <label class="form-check-label fs-1" for="secondCheckbox">產品圖片</label>
                                             <input name="image" class="form-check-input me-1 fs-1 w-75"
-                                                type="file" value="" style="height: 100px;">
+                                                type="file" value="" style="height: 100px;" required>
                                         </li>
                                         <li class="list-group-item">
                                             <label class="form-check-label fs-1" for="thirdCheckbox">產品價格*</label>

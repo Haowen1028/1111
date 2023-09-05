@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -15,7 +16,7 @@ class ProductController extends Controller
     {
         $products = Product::get();
         //產品列表
-        return view('product.cartlist',compact('products'));
+        return view('product.cartlist', compact('products'));
     }
 
     /**
@@ -36,13 +37,17 @@ class ProductController extends Controller
 
         //儲存新增的資料頁
         //查看請求的資料(form表單裡的input)
-        //dd($request->all());
+
+        $path = Storage::putFile('public/upload', $request->file('image'));
+
+
+
         Product::create([
             'name' => $request->name,
-            'img_path' =>$request->image,
-            'price'=>$request->price,
-            'status'=>$request->static,
-            'desc'=>$request->desc,
+            'img_path' => str_replace('public', 'storage', $path),
+            'price' => $request->price,
+            'status' => $request->status,
+            'desc' => $request->desc,
         ]);
 
         return redirect(route('product.index'));
@@ -60,10 +65,12 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
+        //去找目標產品進行顯示
+        $product = Product::find($id);
         //產品編輯頁面
-        return view('product.editcartlist');
+        return view('product.editcartlist', compact('product'));
     }
 
     /**
@@ -72,13 +79,17 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //產品資料更新功能
+        dd($request->all());
+        // $request->
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage.  
      */
     public function destroy(string $id)
     {
         //刪除資料功能
+        // $type = Product::find($id);
+        // foreach($type->product ?? [id])
     }
 }
